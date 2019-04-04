@@ -1,0 +1,4 @@
+.vscode/*
+
+bazel-*
+compile_commands.json
