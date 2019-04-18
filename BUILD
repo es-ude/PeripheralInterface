@@ -1,4 +1,4 @@
-load("@AVR_Toolchain//:helpers.bzl", "default_embedded_lib")
+load("@AvrToolchain//:helpers.bzl", "default_embedded_lib")
 
 filegroup(
     name = "PublicHdrs",
