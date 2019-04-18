@@ -13,7 +13,7 @@ workspace(
 )
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@//:department.bzl", "clone_git")
+load("@//:department.bzl", "create_avr_toolchain")
 
 http_archive(
     name = "Unity",
@@ -42,12 +42,18 @@ http_archive(
     urls = ["https://github.com/ThrowTheSwitch/CMock/archive/master.tar.gz"],
 )
 
-local_repository(
-    name = "Util",
-    path = "../EmbeddedUtil"
+git_repository(
+    name = "EmbeddedUtilities",
+    commit = "5bfd18c56dc90041662bb532e6c06371a9a4f2d2",
+    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
 )
 
 local_repository(
     name = "AVR_Toolchain",
-    path = "../bazel-avr-toolchain-linux"
+    path = "../bazel-avr-toolchain-linux",
+)
+
+create_avr_toolchain(
+    name = "Toolchain",
+    avr_gcc = "",
 )

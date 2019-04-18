@@ -2,7 +2,7 @@ load("@AVR_Toolchain//:helpers.bzl", "default_embedded_lib")
 
 filegroup(
     name = "PublicHdrs",
-    srcs = glob(["PeripheralInterface/**/*.h"])
+    srcs = glob(["PeripheralInterface/**/*.h"]),
 )
 
 exports_files(
@@ -12,7 +12,6 @@ exports_files(
 
 default_embedded_lib(
     name = "PeripheralInterface",
-    hdrs = ["PublicHdrs"],
     srcs = [
         "src/PeripheralInterface.c",
         "src/PeripheralSPIImpl.c",
@@ -21,12 +20,13 @@ default_embedded_lib(
         "src/Usart.c",
         "src/UsartIntern.h",
     ],
+    hdrs = ["PublicHdrs"],
+    visibility = ["//visibility:public"],
     deps = [
-        "@Util//:Debug",
-        "@Util//:Mutex",
-        "@Util//:BitManipulation",
+        "@EmbeddedUtilities//:BitManipulation",
+        "@EmbeddedUtilities//:Debug",
+        "@EmbeddedUtilities//:Mutex",
     ],
-    visibility = ["//visibility:public"]
 )
 
 #########################################
