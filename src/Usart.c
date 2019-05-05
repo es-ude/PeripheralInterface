@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "CException.h"
 #include "src/UsartIntern.h"
 

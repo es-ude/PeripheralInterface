@@ -1,4 +1,3 @@
-load("@AvrToolchain//:helpers.bzl", "default_embedded_lib")
 
 filegroup(
     name = "PublicHdrs",
@@ -10,7 +9,7 @@ exports_files(
     visibility = ["//visibility:public"],
 )
 
-default_embedded_lib(
+cc_library(
     name = "PeripheralInterface",
     srcs = [
         "src/PeripheralInterface.c",
