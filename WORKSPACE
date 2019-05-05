@@ -53,6 +53,6 @@ http_archive(
 
 git_repository(
     name = "EmbeddedUtilities",
-    commit = "69f06616dbf1b7042ac8d5b56b25bf436a9b3ab7",
+    commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
     remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
 )
