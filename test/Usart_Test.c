@@ -1,5 +1,5 @@
-#include "Peripheral/Usart.h"
-#include "src/Peripheral/UsartIntern.h"
+#include "PeripheralInterface/Usart.h"
+#include "src/UsartIntern.h"
 #include "unity.h"
 #include "CException.h"
 

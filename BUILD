@@ -1,4 +1,3 @@
-
 filegroup(
     name = "PublicHdrs",
     srcs = glob(["PeripheralInterface/**/*.h"]),
@@ -20,6 +19,7 @@ cc_library(
         "src/UsartIntern.h",
     ],
     hdrs = ["PublicHdrs"],
+    features = ["c99"],
     visibility = ["//visibility:public"],
     deps = [
         "@EmbeddedUtilities//:BitManipulation",
