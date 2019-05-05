@@ -13,15 +13,13 @@ More info under https://docs.bazel.build/versions/master/be/workspace.html#new_h
 
 git_repository(
     name = "EmbeddedSystemsBuildScripts",
-    branch = "develop",
+    commit = "69f06616dbf1b7042ac8d5b56b25bf436a9b3ab7",
     remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
 )
 
-load("@EmbeddedSystemsBuildScripts//:avr.bzl", "create_avr_toolchain")
+load("@EmbeddedSystemsBuildScripts//:avr.bzl", "avr_toolchain")
 
-create_avr_toolchain(
-    name = "AvrToolchain",
-)
+avr_toolchain()
 
 http_archive(
     name = "Unity",
@@ -38,12 +36,6 @@ http_archive(
 )
 
 http_archive(
-    name = "UnityPlugin",
-    strip_prefix = "BazelUnityPlugin-develop",
-    urls = ["https://github.com/glencoe/BazelUnityPlugin/archive/develop.tar.gz"],
-)
-
-http_archive(
     name = "CMock",
     build_file = "@EmbeddedSystemsBuildScripts//:BUILD.CMock",
     strip_prefix = "CMock-master",
@@ -57,17 +49,9 @@ http_archive(
     urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
-#git_repository(
-local_repository(
+git_repository(
     name = "EmbeddedUtilities",
     path = "../EmbeddedUtil",
-#    commit = "5bfd18c56dc90041662bb532e6c06371a9a4f2d2",
-#    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
-)
-
-git_repository(
-    name = "PeripheralInterface",
-    commit = "1e0e60cacdbb9a8dd6871d826951c76cd305f030",
-    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/peripheralinterface.git",
-    shallow_since = "1555567164 +0200",
+    commit = "69f06616dbf1b7042ac8d5b56b25bf436a9b3ab7",
+    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
 )

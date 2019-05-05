@@ -1,4 +1,6 @@
 .vscode/*
 
 bazel-*
+user.bazelrc
+.clwb/*
 compile_commands.json
