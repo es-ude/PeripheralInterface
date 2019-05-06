@@ -16,9 +16,7 @@ pipeline:
       - docker_username
       - docker_password
     commands:
-      - pwd
-      - ls 
-      - ls /drone/src/
+      - ln -s /user.bazelrc user.bazelrc
       - bazel test test:all --config=native
     when:
       event: [push, pull_request, tag]
