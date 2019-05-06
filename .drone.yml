@@ -16,7 +16,7 @@ pipeline:
       - docker_username
       - docker_password
     commands:
-      - bazel test test:ALL --config=native
+      - bazel test test:all --config=native
     when:
       event: [push, pull_request, tag]
       #branch: [drone]
