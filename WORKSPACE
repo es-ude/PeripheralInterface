@@ -12,11 +12,16 @@ More info under https://docs.bazel.build/versions/master/be/workspace.html#new_h
 """
 
 #git_repository(
-local_repository(
+# local_repository(
+#     name = "EmbeddedSystemsBuildScripts",
+#     path = "../bazel-avr-toolchain-linux",
+#     #    commit = "bf33c82a43afee76e70638bad01c8a385ee6ec5b",
+#     #    remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
+# )
+http_archive(
     name = "EmbeddedSystemsBuildScripts",
-    path = "../bazel-avr-toolchain-linux",
-    #    commit = "bf33c82a43afee76e70638bad01c8a385ee6ec5b",
-    #    remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
+    type = "zip",
+    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/embeddedsystemsbuildscripts/0.2/EmbeddedSystemsBuildScripts.zip"],
 )
 
 load("@EmbeddedSystemsBuildScripts//:avr.bzl", "avr_toolchain")
