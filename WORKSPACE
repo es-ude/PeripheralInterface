@@ -11,12 +11,12 @@ We use the prefix new because unity isn't a bazel project, so we need to provide
 More info under https://docs.bazel.build/versions/master/be/workspace.html#new_http_archive
 """
 
-#git_repository(
-local_repository(
+git_repository(
+    #local_repository(
     name = "EmbeddedSystemsBuildScripts",
-    path = "../bazel-avr-toolchain-linux",
-    #    commit = "bf33c82a43afee76e70638bad01c8a385ee6ec5b",
-    #    remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
+    #    path = "../bazel-avr-toolchain-linux",
+    commit = "548b9fb58145e97f9feb04d54031315f2b745fe8",
+    remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
 )
 
 load("@EmbeddedSystemsBuildScripts//:avr.bzl", "avr_toolchain")
@@ -54,5 +54,5 @@ http_archive(
 git_repository(
     name = "EmbeddedUtilities",
     commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
+    remote = "https://bitbucket.es.uni-due.de/scm/im/embedded-utilities.git",
 )

@@ -14,6 +14,7 @@ PeripheralInterfaceSPI_createNew(PeripheralInterface *memory, const SPIConfig *c
   PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) memory;
   impl->config = *spiConfig;
   impl->current_peripheral = NULL;
+  initMutex(&memory->mutex);
   resetWriteCallback((PeripheralInterface *)impl);
   resetReadCallback((PeripheralInterface *) impl);
   setInterfaceFunctionPointers(&impl->interface);
@@ -126,26 +127,12 @@ void selectPeripheral(PeripheralInterface *self, Peripheral *device) {
   SPISlave *spi_chip = (SPISlave *) device;
   volatile uint8_t *control_register = impl->config.control_register;
 
-  bool claimed = tryToClaimInterfaceWithPeripheral(impl, spi_chip);
-  if (claimed) {
-    CEXCEPTION_T exception;
-    Try {
           configurePeripheral (device);
           becomeSPIMaster(impl);
           setClockRateDivider(impl, spi_chip->clock_rate_divider);
           setSPIMode(control_register, spi_chip->spi_mode);
           setDataOrder(control_register, spi_chip->data_order);
           activateSlaveSelectLine(spi_chip);
-        }
-    Catch(exception) {
-      releaseInterface(impl);
-      tearDownMaster(impl);
-      Throw(exception);
-    }
-  }
-  else {
-    Throw(PERIPHERAL_INTERFACE_BUSY_EXCEPTION);
-  }
 }
 
 static void becomeSPIMaster(PeripheralInterfaceSPIImpl *self) {
@@ -228,26 +215,12 @@ void releaseInterface(PeripheralInterfaceSPIImpl *impl) {
   impl->current_peripheral = NULL;
 }
 
-static bool tryToClaimInterfaceWithPeripheral(PeripheralInterfaceSPIImpl *impl, SPISlave *device) {
-  bool claimed = false;
-  if (impl->current_peripheral == NULL) {
-    claimed = true;
-    impl->current_peripheral = device;
-  }
-  return claimed;
-}
-
 static void deselectPeripheral(PeripheralInterface *self, Peripheral *device) {
   PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
 
-  if (device == impl->current_peripheral) {
-    deactivateSlaveSelectLine(impl->current_peripheral);
-    releaseInterface(impl);
-    tearDownMaster(impl);
-  }
-  else {
-    Throw(PERIPHERAL_INTERFACE_DESELECTED_WRONG_PERIPHERAL_EXCEPTION);
-  }
+  deactivateSlaveSelectLine(impl->current_peripheral);
+  releaseInterface(impl);
+  tearDownMaster(impl);
 }
 
 static void tearDownMaster(PeripheralInterfaceSPIImpl *self) {

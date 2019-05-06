@@ -26,12 +26,30 @@ PeripheralInterface_writeNonBlocking(PeripheralInterface *self,
 
 void PeripheralInterface_selectPeripheral(PeripheralInterface *self, Peripheral *device)
 {
-  deSelectAfterLocking(self, device, self->selectPeripheral);
+//  CEXCEPTION_T e;
+//  Try
+//  {
+//    lockMutex(&self->mutex, device);
+//  }
+//  Catch (e)
+//  {
+//    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
+//  }
+  self->selectPeripheral(self, device);
 }
 
 void PeripheralInterface_deselectPeripheral(PeripheralInterface *self, Peripheral *device)
 {
-  deSelectAfterLocking(self, device, self->deselectPeripheral);
+//  CEXCEPTION_T e;
+//  Try
+//  {
+//    unlockMutex(&self->mutex, device);
+//  }
+//  Catch (e)
+//  {
+//    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
+//  }
+  self->deselectPeripheral(self, device);
 }
 
 void PeripheralInterface_readBlocking(PeripheralInterface *self, uint8_t *destination_buffer, size_t size)
