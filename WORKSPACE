@@ -49,14 +49,14 @@ http_archive(
     urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
-http_archive(
+#http_archive(
+#    name = "EmbeddedUtilities",
+#    commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
+#    remote = "https://bitbucket.es.uni-due.de/scm/im/embedded-utilities.git",
+#)
+
+git_repository(
     name = "EmbeddedUtilities",
     commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-    remote = "https://bitbucket.es.uni-due.de/scm/im/embedded-utilities.git",
+    remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
 )
-
-# git_repository(
-#     name = "EmbeddedUtilities",
-#     commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-#     remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
-# )
