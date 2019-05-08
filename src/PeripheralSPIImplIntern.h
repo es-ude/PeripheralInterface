@@ -22,7 +22,7 @@ static void handleReadInterrupt(PeripheralInterface *self);
 
 static void setClockRateDividerBitValues(volatile uint8_t *control_register, uint8_t value);
 
-static void configurePeripheral (Peripheral *device);
+static void configurePeripheral (SPISlave *device);
 static void setClockRateDivider(PeripheralInterfaceSPIImpl *impl, uint8_t rate);
 static void setSPIMode(volatile uint8_t *control_register, uint8_t mode);
 static void setDataOrder(volatile uint8_t *control_register, uint8_t data_order);

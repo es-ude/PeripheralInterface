@@ -19,11 +19,9 @@ cc_library(
         "src/UsartIntern.h",
     ],
     hdrs = ["PublicHdrs"],
-    features = ["c99"],
     visibility = ["//visibility:public"],
     deps = [
         "@EmbeddedUtilities//:BitManipulation",
-        "@EmbeddedUtilities//:Debug",
         "@EmbeddedUtilities//:Mutex",
     ],
 )
