@@ -24,6 +24,6 @@ unity_test(
 
 mock(
     name = "MockMutex",
-    srcs = ["@EmbeddedUtilities//:Util/Mutex.h"],
-    deps = ["@EmbeddedUtilities//:Mutex"],
+    srcs = ["@EmbeddedUtilities-native//:Util/Mutex.h"],
+    deps = ["@EmbeddedUtilities-native//:Mutex"],
 )

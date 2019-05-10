@@ -22,9 +22,10 @@ cc_library(
     ],
     hdrs = ["PublicHdrs"],
     visibility = ["//visibility:public"],
+
     deps = [
-        "@EmbeddedUtilities//:BitManipulation",
-        "@EmbeddedUtilities//:Mutex",
+        "@EmbeddedUtilities-native//:BitManipulation",
+        "@EmbeddedUtilities-native//:Mutex",
     ],
 )
 
