@@ -1,3 +1,5 @@
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar", "pkg_deb")
+
 filegroup(
     name = "PublicHdrs",
     srcs = glob(["PeripheralInterface/**/*.h"]),
@@ -28,20 +30,34 @@ cc_library(
     ],
 )
 
-#########################################
-### Generate zip file for publishing  ###
-#########################################
+pkg_tar(
+    name = "pkgPeripheralInterface",
+    srcs = [":PeripheralInterface"],
+    extension = "tar.gz",
+    mode = "0644"
+)
 
-genzip_cmd = "zip -j $(OUTS) $(locations :PeripheralInterface); zip $(OUTS) $(locations :PublicHdrs)"
+pkg_tar(
+    name = "pkgTemplate",
+    srcs = ["BUILD.peripheralInterface"],
+    extension = "tar.gz",
+    mode = "0644",
+    remap_paths = {
+        "BUILD.peripheralInterface": "BUILD"
+    }
+)
 
-LibAndHeaderForPublishing = [
-    ":PeripheralInterface",
-    ":PublicHdrs",
-]
+pkg_tar(
+    name = "pkgPublicHdrs",
+    srcs = [":PublicHdrs"],
+    strip_prefix = ".",
+    extension = "tar.gz",
+    mode = "0644"
+)
 
-genrule(
-    name = "PeripheralInterfaceZip",
-    srcs = LibAndHeaderForPublishing,
-    outs = ["PeripheralInterface.zip"],
-    cmd = genzip_cmd,
+pkg_tar(
+    name = "pkg",
+    deps = ["pkgPeripheralInterface", "pkgPublicHdrs", "pkgTemplate"],
+    extension = "tar.gz",
+    mode = "0644"
 )

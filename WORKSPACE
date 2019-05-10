@@ -58,9 +58,17 @@ http_archive(
 
 http_archive(
     name = "EmbeddedUtilities",
-    type = "zip",
-    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embeddedutilities/0.2/EmbeddedUtilities.zip"],
+    type = "tar.gz",
+    # build_file = "//:BUILD.embeddedutilities",
+    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embedded-utilities/0.1.3/embedded-utilities-native.tar.gz"],
 )
+
+# http_archive(
+#     name = "EmbeddedUtilities",
+#     type = "zip",
+#     build_file = "//:BUILD.embeddedutilities",
+#     urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embeddedutilities/0.2/EmbeddedUtilities.zip"],
+# )
 
 # git_repository(
 #     name = "EmbeddedUtilities",
