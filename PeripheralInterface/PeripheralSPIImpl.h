@@ -64,45 +64,42 @@
  * your peripheral device datasheet recommends a clock rate of 1 MHz and your
  * microcontroller runs at 16MHz, so you choose SPI_CLOCK_RATE_DIVIDER_16.
  */
-enum SPIControlRegisterParameters
-{
-  SPI_DATA_ORDER_MSB_FIRST,
-  SPI_DATA_ORDER_LSB_FIRST,
-  SPI_CLOCK_RATE_DIVIDER_4,
-  SPI_CLOCK_RATE_DIVIDER_8,
-  SPI_CLOCK_RATE_DIVIDER_16,
-  SPI_CLOCK_RATE_DIVIDER_32,
-  SPI_CLOCK_RATE_DIVIDER_64,
-  SPI_CLOCK_RATE_DIVIDER_128,
-  SPI_MODE_0,
-  SPI_MODE_1,
-  SPI_MODE_2,
-  SPI_MODE_3,
-  SPI_IDLE_SIGNAL_LOW,
-  SPI_IDLE_SIGNAL_HIGH,
-};
+
+static const uint8_t SPI_DATA_ORDER_MSB_FIRST = 0;
+static const uint8_t SPI_DATA_ORDER_LSB_FIRST = 1;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_4 = 4;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_8 = 8;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_16 = 16;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_32 = 32;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_64 = 64;
+static const uint8_t SPI_CLOCK_RATE_DIVIDER_128 = 128;
+static const uint8_t SPI_MODE_0 = 0;
+static const uint8_t SPI_MODE_1 = 1;
+static const uint8_t SPI_MODE_2 = 2;
+static const uint8_t SPI_MODE_3 = 3;
+static const uint8_t SPI_IDLE_SIGNAL_LOW = 0;
+static const uint8_t SPI_IDLE_SIGNAL_HIGH = 1;
 
 /*! Software representation of the spi slave connected to the hosts spi hardware
  * interface
  *
  */
-typedef struct SPISlave
-{
-  volatile uint8_t*
-    data_direction_register; /*!< this has to match the port the slave select
+typedef struct SPISlave {
+    volatile uint8_t *
+            data_direction_register; /*!< this has to match the port the slave select
                                 line is connected to */
-  volatile uint8_t*
-    data_register; /*!< data register for controlling the slave select line */
-  uint8_t slave_select_pin; /*!< set this to match the pin number your slave
+    volatile uint8_t *
+            data_register; /*!< data register for controlling the slave select line */
+    uint8_t slave_select_pin; /*!< set this to match the pin number your slave
                                select line is connected to */
-  uint8_t
-    clock_rate_divider; /*!< use this to divide the microcontrollers clock rate
+    uint8_t
+            clock_rate_divider; /*!< use this to divide the microcontrollers clock rate
                            to match the spi clock rate supported by the slave */
-  uint8_t data_order;  /*!< whether to transmit each byte with the most or least
+    uint8_t data_order;  /*!< whether to transmit each byte with the most or least
                           significant bit leading */
-  uint8_t idle_signal; /*!< configure whether the idle signal for your slave is
+    uint8_t idle_signal; /*!< configure whether the idle signal for your slave is
                           supposed to be low or high */
-  uint8_t spi_mode; /*!< the spi mode to use with your slave (this information
+    uint8_t spi_mode; /*!< the spi mode to use with your slave (this information
                        should be included in its datasheet */
 } SPISlave;
 
@@ -110,22 +107,21 @@ typedef struct SPISlave
  * For information on how to set this up, look at the example above and your
  * microcontrollers datasheet.
  */
-typedef struct SPIConfig
-{
-  volatile uint8_t* control_register;
-  volatile uint8_t* status_register;
-  volatile uint8_t* data_register;
-  volatile uint8_t*
-    io_lines_data_direction_register; /*!< the io_lines registers refer to the
+typedef struct SPIConfig {
+    volatile uint8_t *control_register;
+    volatile uint8_t *status_register;
+    volatile uint8_t *data_register;
+    volatile uint8_t *
+            io_lines_data_direction_register; /*!< the io_lines registers refer to the
                                          port used for the spi hardware
                                          interface clock pin and slave select
                                          pin */
-  volatile uint8_t* io_lines_data_register;
-  uint8_t miso_pin;
-  uint8_t mosi_pin;
-  uint8_t clock_pin;
-  uint8_t
-    slave_select_pin; /*!< This refers to the pin that can be used by the
+    volatile uint8_t *io_lines_data_register;
+    uint8_t miso_pin;
+    uint8_t mosi_pin;
+    uint8_t clock_pin;
+    uint8_t
+            slave_select_pin; /*!< This refers to the pin that can be used by the
                          microcontroller to receive slave select signals. */
 } SPIConfig;
 
@@ -143,8 +139,8 @@ PeripheralInterfaceSPI_getADTSize(void);
  * memory occupied by spiConfig can be freed again.
  */
 void
-PeripheralInterfaceSPI_createNew(PeripheralInterface* memory,
-                                 const SPIConfig* spiConfig);
+PeripheralInterfaceSPI_createNew(PeripheralInterface *memory,
+                                 const SPIConfig *spiConfig);
 
 /**
  * Do not use this definition in production code. The structures below
@@ -163,14 +159,13 @@ typedef struct InterruptData InterruptData;
  * Do not use this struct directly ever. Use the functions above.
  * It is just defined here to allow for fine grained control of the memory
  */
-struct InterruptData
-{
-  const uint8_t* output_buffer;
-  uint8_t* input_buffer;
-  size_t output_buffer_length;
-  size_t input_buffer_length;
-  PeripheralInterface_Callback write_callback;
-  PeripheralInterface_Callback read_callback;
+struct InterruptData {
+    const uint8_t *output_buffer;
+    uint8_t *input_buffer;
+    size_t output_buffer_length;
+    size_t input_buffer_length;
+    PeripheralInterface_Callback write_callback;
+    PeripheralInterface_Callback read_callback;
 };
 
 /**
@@ -179,12 +174,10 @@ struct InterruptData
  */
 typedef struct PeripheralInterfaceSPIImpl PeripheralInterfaceSPIImpl;
 
-struct PeripheralInterfaceSPIImpl
-{
-  struct PeripheralInterface interface;
-  SPIConfig config;
-  SPISlave* current_peripheral;
-  InterruptData interrupt_data;
+struct PeripheralInterfaceSPIImpl {
+    struct PeripheralInterface interface;
+    SPIConfig config;
+    InterruptData interrupt_data;
 };
 
 #endif // COMMUNICATIONMODULE_PERIPHERALINTERFACEIMPL_H

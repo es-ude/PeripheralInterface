@@ -11,13 +11,6 @@ We use the prefix new because unity isn't a bazel project, so we need to provide
 More info under https://docs.bazel.build/versions/master/be/workspace.html#new_http_archive
 """
 
-#git_repository(
-# local_repository(
-#     name = "EmbeddedSystemsBuildScripts",
-#     path = "../bazel-avr-toolchain-linux",
-#     #    commit = "bf33c82a43afee76e70638bad01c8a385ee6ec5b",
-#     #    remote = "ssh://git@bitbucket.es.uni-due.de:7999/fks/bazel-avr-toolchain-linux.git",
-# )
 http_archive(
     name = "EmbeddedSystemsBuildScripts",
     type = "zip",
@@ -56,22 +49,18 @@ http_archive(
     urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
+#http_archive(
+#    name = "EmbeddedUtilities",
+#    commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
+#    remote = "https://bitbucket.es.uni-due.de/scm/im/embedded-utilities.git",
+#)
+
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    # build_file = "//:BUILD.embeddedutilities",
     urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embedded-utilities/0.1.3/embedded-utilities-native.tar.gz"],
 )
 
-# http_archive(
-#     name = "EmbeddedUtilities",
-#     type = "zip",
-#     build_file = "//:BUILD.embeddedutilities",
-#     urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embeddedutilities/0.2/EmbeddedUtilities.zip"],
-# )
 
-# git_repository(
-#     name = "EmbeddedUtilities",
-#     commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-#     remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
-# )
+    # commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
+    # remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
