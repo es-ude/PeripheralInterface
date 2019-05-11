@@ -29,6 +29,18 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "PeripheralInterfaceHdrsOnly",
+    srcs = [
+        ":PublicHdrs",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@EmbeddedUtilities//:MutexHdrsOnly"
+    ],
+    linkstatic = True,
+)
+
 package_libraries(
     name = "pkg",
     hdrs = [":PublicHdrs"],

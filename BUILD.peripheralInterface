@@ -1,14 +1,19 @@
+filegroup(
+    name = "PeripheralInterfaceHdrs",
+    srcs = glob(["PeripheralInterface/*.h"])
+)
+
 cc_library(
     name="PeripheralInterface",
     srcs = ["libPeripheralInterface.a"],
-	hdrs = glob(["PeripheralInterface/*.h"]),
+	hdrs = [":PeripheralInterfaceHdrs"],
 	visibility = ["//visibility:public"],
 	deps = ["@CException", "@EmbeddedUtilities//:Mutex"]
 )
 
 cc_library(
     name = "PeripheralInterfaceHdrsOnly",
-	hdrs = glob(["PeripheralInterface/*.h"]),
+	hdrs = [":PeripheralInterfaceHdrs"],
 	visibility = ["//visibility:public"],
     deps = ["@CException", "@EmbeddedUtilities//:MutexHdrOnly"]
 )
