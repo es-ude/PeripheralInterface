@@ -1,8 +1,14 @@
-
 cc_library(
     name="PeripheralInterface",
     srcs = ["libPeripheralInterface.a"],
 	hdrs = glob(["PeripheralInterface/*.h"]),
 	visibility = ["//visibility:public"],
-	deps = ["@CException"]
+	deps = ["@CException", "@EmbeddedUtilities//:Mutex"]
+)
+
+cc_library(
+    name = "PeripheralInterfaceHdrsOnly",
+	hdrs = glob(["PeripheralInterface/*.h"]),
+	visibility = ["//visibility:public"],
+    deps = ["@CException", "@EmbeddedUtilities//:MutexHdrOnly"]
 )

@@ -49,18 +49,10 @@ http_archive(
     urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
-#http_archive(
-#    name = "EmbeddedUtilities",
-#    commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-#    remote = "https://bitbucket.es.uni-due.de/scm/im/embedded-utilities.git",
-#)
+ARTIFACTORY = "http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/"
 
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embedded-utilities/0.1.4/embedded-utilities-avr.tar.gz"],
+    urls = [ARTIFACTORY + "IM/embedded-utilities/0.1.5/embedded-utilities-avr.tar.gz"],
 )
-
-
-    # commit = "66d1feca3758f765f80fbe3673c5149395d6231a",
-    # remote = "ssh://git@bitbucket.es.uni-due.de:7999/im/embedded-utilities.git",
