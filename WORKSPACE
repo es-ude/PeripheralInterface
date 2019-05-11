@@ -56,13 +56,7 @@ http_archive(
 #)
 
 http_archive(
-    name = "EmbeddedUtilities-native",
-    type = "tar.gz",
-    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embedded-utilities/0.1.4/embedded-utilities-native.tar.gz"],
-)
-
-http_archive(
-    name = "EmbeddedUtilities-avr",
+    name = "EmbeddedUtilities",
     type = "tar.gz",
     urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/IM/embedded-utilities/0.1.4/embedded-utilities-avr.tar.gz"],
 )

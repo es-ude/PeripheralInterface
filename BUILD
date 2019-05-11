@@ -24,8 +24,8 @@ cc_library(
     visibility = ["//visibility:public"],
 
     deps = [
-        "@EmbeddedUtilities-native//:BitManipulation",
-        "@EmbeddedUtilities-native//:Mutex",
+        "@EmbeddedUtilities//:BitManipulation",
+        "@EmbeddedUtilities//:Mutex",
     ],
 )
 
