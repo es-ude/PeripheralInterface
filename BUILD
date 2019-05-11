@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar", "pkg_deb")
+load("//:packaging.bzl", "package_libraries")
 
 filegroup(
     name = "PublicHdrs",
@@ -29,34 +29,9 @@ cc_library(
     ],
 )
 
-pkg_tar(
-    name = "pkgPeripheralInterface",
-    srcs = [":PeripheralInterface"],
-    extension = "tar.gz",
-    mode = "0644"
-)
-
-pkg_tar(
-    name = "pkgTemplate",
-    srcs = ["BUILD.peripheralInterface"],
-    extension = "tar.gz",
-    mode = "0644",
-    remap_paths = {
-        "BUILD.peripheralInterface": "BUILD"
-    }
-)
-
-pkg_tar(
-    name = "pkgPublicHdrs",
-    srcs = [":PublicHdrs"],
-    strip_prefix = ".",
-    extension = "tar.gz",
-    mode = "0644"
-)
-
-pkg_tar(
+package_libraries(
     name = "pkg",
-    deps = ["pkgPeripheralInterface", "pkgPublicHdrs", "pkgTemplate"],
-    extension = "tar.gz",
-    mode = "0644"
+    hdrs = [":PublicHdrs"],
+    archives = [":PeripheralInterface"],
+    build_file = "BUILD.peripheralInterface",
 )
