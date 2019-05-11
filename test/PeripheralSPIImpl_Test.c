@@ -3,9 +3,10 @@
 #include "PeripheralInterface/PeripheralSPIImpl.h"
 #include "src/SpiPinNumbers.h"
 #include "PeripheralInterface/Exception.h"
+#include "Util/MockMutex.h"
 
-#include <memory.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define NUMBER_OF_MASTER_REGISTERS 5
 #define NUMBER_OF_SLAVE_REGISTERS 2
@@ -69,6 +70,7 @@ setUp(void)
   config.mosi_pin                         = 2;
   memset(registers_master, 0, NUMBER_OF_MASTER_REGISTERS);
   interface = malloc(PeripheralInterfaceSPI_getADTSize());
+  initMutex_Expect(&interface->mutex);
   PeripheralInterfaceSPI_createNew(interface, &config);
   callback_called = false;
 }

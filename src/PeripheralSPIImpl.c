@@ -140,12 +140,21 @@ selectPeripheral(PeripheralInterface *self,
   PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
   SPISlave *spi_chip = (SPISlave *) device;
   volatile uint8_t *control_register = impl->config.control_register;
-  configurePeripheral(spi_chip);
-  becomeSPIMaster(impl);
-  setClockRateDivider(impl, spi_chip->clock_rate_divider);
-  setSPIMode(control_register, spi_chip->spi_mode);
-  setDataOrder(control_register, spi_chip->data_order);
-  activateSlaveSelectLine(spi_chip);
+  CEXCEPTION_T e = CEXCEPTION_NONE;
+  Try
+      {
+        configurePeripheral(spi_chip);
+        becomeSPIMaster(impl);
+        setClockRateDivider(impl, spi_chip->clock_rate_divider);
+        setSPIMode(control_register, spi_chip->spi_mode);
+        setDataOrder(control_register, spi_chip->data_order);
+        activateSlaveSelectLine(spi_chip);
+      }
+      Catch(e)
+  {
+    tearDownMaster(impl);
+    deactivateSlaveSelectLine(spi_chip);
+  }
 }
 
 static void
@@ -316,7 +325,7 @@ setClockRateDivider(PeripheralInterfaceSPIImpl *impl,
       break;
 
     default:
-      Throw(5);
+      Throw(PERIPHERAL_SELECT_EXCEPTION);
   }
 }
 
@@ -373,7 +382,7 @@ setSPIMode(volatile uint8_t *control_register,
       break;
 
     default:
-      Throw(6);
+      Throw(PERIPHERAL_SELECT_EXCEPTION);
   }
   set_clock_phase(control_register, clock_phase_bit);
   set_clock_polarity(control_register, clock_polarity_bit);
@@ -395,7 +404,7 @@ setDataOrder(volatile uint8_t *control_register,
       break;
 
     default:
-      Throw(7);
+      Throw(PERIPHERAL_SELECT_EXCEPTION);
   }
 }
 

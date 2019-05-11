@@ -1,19 +1,11 @@
 #include "PeripheralInterface/PeripheralInterface.h"
 #include <CException.h>
 
-static void
-deSelectAfterLocking(PeripheralInterface *self,
-                    Peripheral *device,
-                    void (*function)(PeripheralInterface *self, Peripheral *device));
-
 void
 PeripheralInterface_writeBlocking(PeripheralInterface *self, const uint8_t *buffer, size_t size)
 {
-  while(size > 0)
-  {
-    self->writeByteBlocking(self, *buffer);
-    buffer++;
-    size--;
+  for (;size > 0; size--){
+    self->writeByteBlocking(self, *buffer++);
   }
 }
 
@@ -26,39 +18,37 @@ PeripheralInterface_writeNonBlocking(PeripheralInterface *self,
 
 void PeripheralInterface_selectPeripheral(PeripheralInterface *self, Peripheral *device)
 {
-//  CEXCEPTION_T e;
-//  Try
-//  {
-//    lockMutex(&self->mutex, device);
-//  }
-//  Catch (e)
-//  {
-//    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
-//  }
+  CEXCEPTION_T e;
+  Try
+  {
+    lockMutex(&self->mutex, device);
+  }
+  Catch (e)
+  {
+    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
+  }
   self->selectPeripheral(self, device);
 }
 
 void PeripheralInterface_deselectPeripheral(PeripheralInterface *self, Peripheral *device)
 {
-//  CEXCEPTION_T e;
-//  Try
-//  {
-//    unlockMutex(&self->mutex, device);
-//  }
-//  Catch (e)
-//  {
-//    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
-//  }
+  CEXCEPTION_T e;
+  Try
+  {
+    unlockMutex(&self->mutex, device);
+  }
+  Catch (e)
+  {
+    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
+  }
   self->deselectPeripheral(self, device);
 }
 
 void PeripheralInterface_readBlocking(PeripheralInterface *self, uint8_t *destination_buffer, size_t size)
 {
-  while(size > 0)
+  for (; size > 0; size--)
   {
-    *destination_buffer = self->readByteBlocking(self);
-    destination_buffer++;
-    size--;
+    *destination_buffer++ = self->readByteBlocking(self);
   }
 }
 
@@ -78,21 +68,4 @@ void
 PeripheralInterface_handleReadInterrupt(PeripheralInterface *self)
 {
   self->handleReadInterrupt(self);
-}
-
-static void
-deSelectAfterLocking(PeripheralInterface *self,
-                     Peripheral *device,
-                     void (*function)(PeripheralInterface *self, Peripheral *device))
-{
-  CEXCEPTION_T e;
-  Try
-  {
-    lockMutex(&self->mutex, device);
-  }
-  Catch (e)
-  {
-    Throw(PERIPHERALINTERFACE_BUSY_EXCEPTION);
-  }
-  function(self, device);
 }

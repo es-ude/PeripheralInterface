@@ -11,6 +11,7 @@ unity_test(
 unity_test(
     file_name = "PeripheralSPIImpl_Test.c",
     deps = [
+        ":MockMutex",
         "//:PeripheralInterface",
     ],
 )

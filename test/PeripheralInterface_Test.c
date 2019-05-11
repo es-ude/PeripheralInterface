@@ -124,7 +124,7 @@ test_selectPeripheralWithDeviceOne(void)
 void
 test_deselectPeripheral(void)
 {
-  lockMutex_Expect(&interface.functions.mutex, NULL);
+  unlockMutex_Expect(&interface.functions.mutex, NULL);
   PeripheralInterface_deselectPeripheral(interface_ptr, NULL);
   TEST_ASSERT_TRUE(peripheral_de_selected);
 }
@@ -132,7 +132,7 @@ test_deselectPeripheral(void)
 void
 test_deselectPeripheralButUnableToLockMutex(void)
 {
-  lockMutex_ExpectAndThrow(&interface.functions.mutex, NULL, MUTEX_WAS_NOT_LOCKED);
+  unlockMutex_ExpectAndThrow(&interface.functions.mutex, NULL, MUTEX_WAS_NOT_LOCKED);
   CEXCEPTION_T exception = PERIPHERALINTERFACE_NO_EXCEPTION;
   Try
   {
@@ -150,6 +150,6 @@ void
 test_deselectPeripheralDeviceOne(void)
 {
   Peripheral *device = (Peripheral *) 1;
-  lockMutex_Expect(&interface.functions.mutex, device);
+  unlockMutex_Expect(&interface.functions.mutex, device);
   PeripheralInterface_deselectPeripheral(interface_ptr, device);
 }

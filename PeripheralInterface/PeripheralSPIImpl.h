@@ -65,20 +65,35 @@
  * microcontroller runs at 16MHz, so you choose SPI_CLOCK_RATE_DIVIDER_16.
  */
 
-static const uint8_t SPI_DATA_ORDER_MSB_FIRST = 0;
-static const uint8_t SPI_DATA_ORDER_LSB_FIRST = 1;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_4 = 4;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_8 = 8;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_16 = 16;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_32 = 32;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_64 = 64;
-static const uint8_t SPI_CLOCK_RATE_DIVIDER_128 = 128;
-static const uint8_t SPI_MODE_0 = 0;
-static const uint8_t SPI_MODE_1 = 1;
-static const uint8_t SPI_MODE_2 = 2;
-static const uint8_t SPI_MODE_3 = 3;
-static const uint8_t SPI_IDLE_SIGNAL_LOW = 0;
-static const uint8_t SPI_IDLE_SIGNAL_HIGH = 1;
+enum
+{
+    SPI_DATA_ORDER_MSB_FIRST = 0,
+    SPI_DATA_ORDER_LSB_FIRST = 1,
+    };
+
+enum
+{
+    SPI_CLOCK_RATE_DIVIDER_4 = 4,
+    SPI_CLOCK_RATE_DIVIDER_8 = 8,
+    SPI_CLOCK_RATE_DIVIDER_16 = 16,
+    SPI_CLOCK_RATE_DIVIDER_32 = 32,
+    SPI_CLOCK_RATE_DIVIDER_64 = 64,
+    SPI_CLOCK_RATE_DIVIDER_128 = 128,
+};
+
+enum
+{
+    SPI_MODE_0 = 0,
+    SPI_MODE_1 = 1,
+    SPI_MODE_2 = 2,
+    SPI_MODE_3 = 3,
+};
+
+enum
+{
+    SPI_IDLE_SIGNAL_LOW = 0,
+    SPI_IDLE_SIGNAL_HIGH = 1,
+};
 
 /*! Software representation of the spi slave connected to the hosts spi hardware
  * interface
