@@ -3,7 +3,7 @@ load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 def package_libraries(name, build_file, hdrs = [], archives = []):
     pkg_tar(
         name = "pkg" + name + "Hdrs",
-        srcs = archives,
+        srcs = hdrs,
         strip_prefix = ".",
         extension = "tar.gz",
         mode = "0644"

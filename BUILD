@@ -22,7 +22,7 @@ cc_library(
     ],
     hdrs = ["PublicHdrs"],
     visibility = ["//visibility:public"],
-
+    linkstatic = True,
     deps = [
         "@EmbeddedUtilities//:BitManipulation",
         "@EmbeddedUtilities//:Mutex",
