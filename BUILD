@@ -1,8 +1,20 @@
-load("//:packaging.bzl", "package_libraries")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 
 filegroup(
     name = "PublicHdrs",
     srcs = glob(["PeripheralInterface/**/*.h"]),
+)
+
+filegroup(
+    name = "Srcs",
+    srcs = [
+                "src/PeripheralInterface.c",
+                "src/PeripheralSPIImpl.c",
+                "src/PeripheralSPIImplIntern.h",
+                "src/SpiPinNumbers.h",
+                "src/Usart.c",
+                "src/UsartIntern.h",
+    ],
 )
 
 exports_files(
@@ -12,15 +24,8 @@ exports_files(
 
 cc_library(
     name = "PeripheralInterface",
-    srcs = [
-        "src/PeripheralInterface.c",
-        "src/PeripheralSPIImpl.c",
-        "src/PeripheralSPIImplIntern.h",
-        "src/SpiPinNumbers.h",
-        "src/Usart.c",
-        "src/UsartIntern.h",
-    ],
-    hdrs = ["PublicHdrs"],
+    srcs = [":Srcs"],
+    hdrs = [":PublicHdrs"],
     visibility = ["//visibility:public"],
     linkstatic = True,
     deps = [
@@ -41,9 +46,14 @@ cc_library(
     linkstatic = True,
 )
 
-package_libraries(
+pkg_tar(
     name = "pkg",
-    hdrs = [":PublicHdrs"],
-    archives = [":PeripheralInterface"],
-    build_file = "BUILD.peripheralInterface",
+    srcs = [
+        ":PublicHdrs",
+        ":Srcs",
+        "BUILD",
+    ],
+    extension = "tar.gz",
+    mode = "0644",
+    strip_prefix = ".",
 )
