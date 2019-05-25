@@ -14,7 +14,7 @@ More info under https://docs.bazel.build/versions/master/be/workspace.html#new_h
 http_archive(
     name = "EmbeddedSystemsBuildScripts",
     type = "tar.gz",
-    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/FKS/embedded-systems-build-scripts/0.4.1/embedded-systems-build-scripts.tar.gz"],
+    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/FKS/embedded-systems-build-scripts/0.4.7/embedded-systems-build-scripts.tar.gz"],
 )
 
 load("@EmbeddedSystemsBuildScripts//:avr.bzl", "avr_toolchain")
@@ -54,5 +54,5 @@ ARTIFACTORY = "http://artifactory.es.uni-due.de:8081/artifactory/libs-release-lo
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    urls = [ARTIFACTORY + "IM/embedded-utilities/0.1.5/embedded-utilities-avr.tar.gz"],
+    urls = [ARTIFACTORY + "IM/embedded-utilities/0.2/embedded-utilities-avr.tar.gz"],
 )
