@@ -27,7 +27,7 @@ cc_library(
     name = "PeripheralInterface",
     srcs = [":Srcs"],
     hdrs = [":PublicHdrs"],
-    copts = mcu_avr_gcc_flag(),
+	copts = mcu_avr_gcc_flag(),
     visibility = ["//visibility:public"],
     linkstatic = True,
     deps = [
