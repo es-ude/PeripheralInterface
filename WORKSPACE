@@ -5,19 +5,14 @@ workspace(
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
-"""
-Fetch unity and use the file BUILD.unity (residing in this folder) for the build.
-We use the prefix new because unity isn't a bazel project, so we need to provide a BUILD file.
-More info under https://docs.bazel.build/versions/master/be/workspace.html#new_http_archive
-"""
-
 http_archive(
     name = "EmbeddedSystemsBuildScripts",
     type = "tar.gz",
-    urls = ["http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/FKS/embedded-systems-build-scripts/0.4.7/embedded-systems-build-scripts.tar.gz"],
+    strip_prefix = "EmbeddedSystemsBuildScripts-0.5",
+    urls = ["https://github.com/es-uni-due/EmbeddedSystemsBuildScripts/archive/0.5.tar.gz"]
 )
 
-load("@EmbeddedSystemsBuildScripts//:avr.bzl", "avr_toolchain")
+load("@EmbeddedSystemsBuildScripts//AvrToolchain:avr.bzl", "avr_toolchain")
 
 avr_toolchain()
 
@@ -49,10 +44,10 @@ http_archive(
     urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
-ARTIFACTORY = "http://artifactory.es.uni-due.de:8081/artifactory/libs-release-local/"
 
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    urls = [ARTIFACTORY + "IM/embedded-utilities/0.2/embedded-utilities-avr.tar.gz"],
+    strip_prefix = "EmbeddedUtil-0.3",
+    urls = ["https://github.com/es-uni-due/EmbeddedUtil/archive/0.3.tar.gz"],
 )

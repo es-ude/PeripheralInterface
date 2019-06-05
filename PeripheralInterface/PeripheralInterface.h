@@ -30,19 +30,6 @@ typedef void Peripheral;
 typedef struct PeripheralInterface PeripheralInterface;
 typedef GenericCallback PeripheralInterface_Callback;
 
-typedef struct PeripheralInterface_NonBlockingWriteContext
-{
-  PeripheralInterface_Callback callback;
-  const uint8_t *output_buffer;
-  size_t length;
-} PeripheralInterface_NonBlockingWriteContext;
-
-typedef struct PeripheralInterface_NonBlockingReadContext
-{
-  PeripheralInterface_Callback callback;
-  uint8_t *input_buffer;
-  size_t length;
-} PeripheralInterface_NonBlockingReadContext;
 
 void
 PeripheralInterface_writeBlocking(PeripheralInterface *self,
@@ -50,19 +37,9 @@ PeripheralInterface_writeBlocking(PeripheralInterface *self,
                                   size_t size);
 
 void
-PeripheralInterface_writeNonBlocking(
-  PeripheralInterface *self,
-  PeripheralInterface_NonBlockingWriteContext context);
-
-void
 PeripheralInterface_readBlocking(PeripheralInterface *self,
                                  uint8_t *buffer,
-                                 size_t length);
-
-void
-PeripheralInterface_readNonBlocking(PeripheralInterface *self,
-                                    uint8_t *buffer,
-                                    uint16_t size);
+                                 size_t size);
 
 /**
  * Runs the necessary setup steps to allow data transfers
@@ -86,27 +63,11 @@ void
 PeripheralInterface_deselectPeripheral(PeripheralInterface *self,
                                        Peripheral *device);
 
-/**
- * Use this function inside the interrupt service routine,
- * triggering when a write operation was completed, to allow
- * for non blocking write operations.
- */
-void
-PeripheralInterface_handleWriteInterrupt(PeripheralInterface *self);
 
-/**
- * Use this function inside the interrupt service routine,
- * triggering when a read operation was completed, to allow
- * for non blocking read operations.
- */
-void
-PeripheralInterface_handleReadInterrupt(PeripheralInterface *self);
-
-enum
-{
-  PERIPHERALINTERFACE_NO_EXCEPTION = 0x00,
-  PERIPHERALINTERFACE_UNSUPPORTED_PERIPHERAL_SETUP_EXCEPTION,
-  PERIPHERALINTERFACE_UNSUPPORTED_INTERFACE_CONFIG_EXCEPTION,
+enum {
+    PERIPHERALINTERFACE_NO_EXCEPTION = 0x00,
+    PERIPHERALINTERFACE_UNSUPPORTED_PERIPHERAL_SETUP_EXCEPTION,
+    PERIPHERALINTERFACE_UNSUPPORTED_INTERFACE_CONFIG_EXCEPTION,
 };
 
 static const uint8_t PERIPHERALINTERFACE_BUSY_EXCEPTION = 3;
@@ -115,28 +76,29 @@ static const uint8_t PERIPHERALINTERFACE_BUSY_EXCEPTION = 3;
  * New implementations can be offered by setting up the struct below
  * and using it as first member of the struct holding the new implementation.
  */
-struct PeripheralInterface
-{
-  Mutex mutex;
-  void (*init)(PeripheralInterface *self);
+struct PeripheralInterface {
+    Mutex mutex;
 
-  void (*writeByteBlocking)(PeripheralInterface *self, uint8_t byte);
-  void (*writeNonBlocking)(
-    PeripheralInterface *self,
-    PeripheralInterface_NonBlockingWriteContext context);
+    void
+    (*init)(PeripheralInterface *self);
 
-  uint8_t (*readByteBlocking)(PeripheralInterface *self);
-  void (*readNonBlocking)(PeripheralInterface *self,
-                          uint8_t *buffer,
-                          uint16_t length);
-  void (*setReadCallback)(PeripheralInterface *self,
-                          PeripheralInterface_Callback callback);
-  void (*resetReadCallback)(PeripheralInterface *self);
+    void
+    (*writeByteBlocking)(PeripheralInterface *self, uint8_t byte);
 
-  void (*selectPeripheral)(PeripheralInterface *self, Peripheral *device);
-  void (*deselectPeripheral)(PeripheralInterface *self, Peripheral *device);
+    uint8_t
+    (*readByteBlocking)(PeripheralInterface *self);
 
-  void (*handleWriteInterrupt)(PeripheralInterface *self);
-  void (*handleReadInterrupt)(PeripheralInterface *self);
+    void
+    (*readNonBlocking)(PeripheralInterface *self,
+                       uint8_t *buffer,
+                       uint16_t length);
+
+    void
+    (*selectPeripheral)(PeripheralInterface *self, Peripheral *device);
+
+    void
+    (*deselectPeripheral)(PeripheralInterface *self, Peripheral *device);
+
 };
+
 #endif /* PERIPHERALINTERFACE_H */

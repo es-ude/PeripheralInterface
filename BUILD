@@ -1,5 +1,4 @@
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@AvrToolchain//:helpers.bzl", "mcu_avr_gcc_flag")
 
 filegroup(
     name = "PublicHdrs",
@@ -27,7 +26,6 @@ cc_library(
     name = "PeripheralInterface",
     srcs = [":Srcs"],
     hdrs = [":PublicHdrs"],
-	copts = mcu_avr_gcc_flag(),
     visibility = ["//visibility:public"],
     linkstatic = True,
     deps = [

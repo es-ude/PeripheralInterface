@@ -7,19 +7,6 @@
 #include "PeripheralInterface/Exception.h"
 #include "src/SpiPinNumbers.h"
 
-extern void debug(const uint8_t *string);
-extern void debugPrintHex(uint8_t byte);
-
-static void writeNonBlocking(PeripheralInterface *self, PeripheralInterface_NonBlockingWriteContext context);
-static void setWriteCallback(PeripheralInterface *self, PeripheralInterface_Callback callback);
-static void resetWriteCallback(PeripheralInterface *self);
-static void handleWriteInterrupt(PeripheralInterface *self);
-
-static void readNonBlocking(PeripheralInterface *self, uint8_t *buffer, uint16_t length);
-static void setReadCallback(PeripheralInterface *self, PeripheralInterface_Callback callback);
-static void resetReadCallback(PeripheralInterface *self);
-static void handleReadInterrupt(PeripheralInterface *self);
-
 static void setClockRateDividerBitValues(volatile uint8_t *control_register, uint8_t value);
 
 static void configurePeripheral (SPISlave *device);
@@ -36,9 +23,6 @@ static void selectPeripheral(PeripheralInterface *self, Peripheral *device);
 
 static void deselectPeripheral(PeripheralInterface *self, Peripheral *device);
 
-// returns true on success, false otherwise
-static bool tryToClaimInterfaceWithPeripheral(PeripheralInterfaceSPIImpl *, SPISlave *);
-
 static void releaseInterface(PeripheralInterfaceSPIImpl *impl);
 
 static void setInterfaceFunctionPointers(PeripheralInterface *self);
@@ -53,7 +37,6 @@ static void setUpIOLines(const SPIConfig *config);
 
 static void setUpControlRegister(volatile uint8_t *control_register);
 static uint8_t transfer(PeripheralInterfaceSPIImpl *self, uint8_t byte);
-static void writeByteNonBlocking(PeripheralInterfaceSPIImpl *self, uint8_t byte);
 static void writeByteBlocking(PeripheralInterface *impl, uint8_t byte);
 static uint8_t readByteBlocking(PeripheralInterface *impl);
 

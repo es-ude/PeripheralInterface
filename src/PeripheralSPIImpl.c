@@ -8,9 +8,6 @@ PeripheralInterfaceSPI_getADTSize(void)
   return sizeof(struct PeripheralInterfaceSPIImpl);
 }
 
-static void
-emptyFunction(void *a) {}
-
 void
 PeripheralInterfaceSPI_createNew(PeripheralInterface *memory,
                                  const SPIConfig *const spiConfig)
@@ -18,8 +15,6 @@ PeripheralInterfaceSPI_createNew(PeripheralInterface *memory,
   PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) memory;
   impl->config = *spiConfig;
   initMutex(&memory->mutex);
-  resetWriteCallback((PeripheralInterface *) impl);
-  resetReadCallback((PeripheralInterface *) impl);
   setInterfaceFunctionPointers(&impl->interface);
 }
 
@@ -31,28 +26,8 @@ setInterfaceFunctionPointers(PeripheralInterface *self)
 
   self->writeByteBlocking = writeByteBlocking;
   self->readByteBlocking = readByteBlocking;
-  self->writeNonBlocking = writeNonBlocking;
-  self->handleWriteInterrupt = handleWriteInterrupt;
-
-  self->readNonBlocking = readNonBlocking;
-  self->setReadCallback = setReadCallback;
-  self->handleReadInterrupt = handleReadInterrupt;
 }
 
-void
-writeNonBlocking(PeripheralInterface *self,
-                 PeripheralInterface_NonBlockingWriteContext context)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  setWriteCallback(self, context.callback);
-  if (impl->interrupt_data.output_buffer_length > 0)
-  {
-    Throw(PERIPHERAL_INTERFACE_BUSY_EXCEPTION);
-  }
-  impl->interrupt_data.output_buffer = context.output_buffer;
-  impl->interrupt_data.output_buffer_length = context.length;
-  handleWriteInterrupt(self);
-}
 
 void
 writeByteBlocking(
@@ -71,41 +46,6 @@ readByteBlocking(
 {
   PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
   return transfer(impl, 0);
-}
-
-void
-handleWriteInterrupt(PeripheralInterface *self)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  if (impl->interrupt_data.output_buffer_length > 0)
-  {
-    writeByteNonBlocking(impl, *impl->interrupt_data.output_buffer);
-    impl->interrupt_data.output_buffer++;
-    impl->interrupt_data.output_buffer_length--;
-  } else
-  {
-    impl->interrupt_data.write_callback.function(impl->interrupt_data.write_callback.argument);
-  }
-}
-
-void
-setWriteCallback(PeripheralInterface *self,
-                 PeripheralInterface_Callback callback)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  if (callback.function == NULL)
-  {
-    callback.function = emptyFunction;
-  }
-  impl->interrupt_data.write_callback = callback;
-}
-
-void
-resetWriteCallback(PeripheralInterface *self)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  impl->interrupt_data.write_callback.argument = NULL;
-  impl->interrupt_data.write_callback.function = emptyFunction;
 }
 
 static void
@@ -202,59 +142,6 @@ transfer(PeripheralInterfaceSPIImpl *self,
   *self->config.data_register = data;
   waitUntilByteTransmitted(self->config.status_register);
   return *self->config.data_register;
-}
-
-uint8_t
-readByteNonBlocking(PeripheralInterfaceSPIImpl *self)
-{
-  return *self->config.data_register;
-}
-
-void
-writeByteNonBlocking(PeripheralInterfaceSPIImpl *self,
-                     uint8_t data)
-{
-  *self->config.data_register = data;
-}
-
-void
-readNonBlocking(PeripheralInterface *self,
-                uint8_t *buffer,
-                uint16_t length)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  impl->interrupt_data.input_buffer = buffer;
-  impl->interrupt_data.input_buffer_length = length;
-  writeByteNonBlocking(impl, 0);
-}
-
-void
-setReadCallback(PeripheralInterface *self,
-                PeripheralInterface_Callback callback)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  impl->interrupt_data.read_callback = callback;
-}
-
-void
-resetReadCallback(PeripheralInterface *self)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  impl->interrupt_data.read_callback.function = emptyFunction;
-  impl->interrupt_data.read_callback.argument = NULL;
-}
-
-void
-handleReadInterrupt(PeripheralInterface *self)
-{
-  PeripheralInterfaceSPIImpl *impl = (PeripheralInterfaceSPIImpl *) self;
-  *impl->interrupt_data.input_buffer = *impl->config.data_register;
-  impl->interrupt_data.input_buffer++;
-  impl->interrupt_data.input_buffer_length--;
-  if (impl->interrupt_data.input_buffer_length == 0)
-  {
-    impl->interrupt_data.read_callback.function(impl->interrupt_data.read_callback.argument);
-  }
 }
 
 void

@@ -82,15 +82,6 @@ writeByte(PeripheralInterface *self, uint8_t byte)
 }
 
 static void
-waitForEndOfReception(PeripheralInterfaceUsartImpl *self)
-{
-  while (!(*self->config.control_and_status_register_a &
-           (1 << usart_reception_complete_bit)))
-    {
-    }
-}
-
-static void
 waitForEndOfTransmission(PeripheralInterfaceUsartImpl *self)
 {
   while (!(*self->config.control_and_status_register_a &
