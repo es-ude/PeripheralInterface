@@ -119,8 +119,17 @@ typedef struct SPISlave {
 } SPISlave;
 
 /*! Configuration struct for the hardware spi interface.
- * For information on how to set this up, look at the example above and your
- * microcontrollers datasheet.
+ * The Config is used to setup the PeripheralInterface representing
+ * the actual SPI hardware interface of your board.
+ * The io_lines_data_*_register struct members refer to the IO port
+ * that MISO,MOSI, clock as well as the slave select pin for using the
+ * hardware interface as a slave. To find the correct values for these
+ * fields you usually have to refer to the "alternate port functions"
+ * section of the data sheet and search for e.g. MISO.
+ * The control, status and data register variables refer to the
+ * corresponding SPI hardware interface registers. Usually these
+ * are called SPCR (control), SPDR (data), SPSR (status) (possibly with
+ * a number appended).
  */
 typedef struct SPIConfig {
     volatile uint8_t *control_register;
