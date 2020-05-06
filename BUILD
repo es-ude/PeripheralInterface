@@ -1,6 +1,4 @@
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@AvrToolchain//:helpers.bzl", "default_embedded_binaries", "default_embedded_binary")
-load("@AvrToolchain//platforms/cpu_frequency:cpu_frequency.bzl", "cpu_frequency_flag")
 
 filegroup(
     name = "PublicHdrs",

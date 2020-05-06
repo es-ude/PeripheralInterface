@@ -9,7 +9,7 @@
  * You can find it under
  * LUFA/Demos/Device/ClassDriver/VirtualSerial/VirtualSerial.c
  */
-//needed
+
 #include <avr/power.h>
 #include <avr/io.h>
 #include <avr/wdt.h>
@@ -18,12 +18,12 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "Demos/Device/ClassDriver/VirtualSerial/Descriptors.h"
-#include "LUFA/Drivers/Peripheral/Serial.h"
 #include "Demos/Device/ClassDriver/VirtualSerial/Config/LUFAConfig.h"
 //instead of #include "LUFAConfig.h"
 
 //added
 #include "LUFA/Drivers/USB/Class/Device/CDCClassDevice.h"
+#include "LUFA/Drivers/USB/USB.h"
 
 static FILE USBSerialStream;
 
@@ -61,7 +61,6 @@ void setUpUsbSerial(void) {
     wdt_reset();
     sei();
     CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &USBSerialStream);
-
 }
 
 void lufaUsart_writeByte(const uint8_t *data);
