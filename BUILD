@@ -1,4 +1,6 @@
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@AvrToolchain//:helpers.bzl", "default_embedded_binaries", "default_embedded_binary")
+load("@AvrToolchain//platforms/cpu_frequency:cpu_frequency.bzl", "cpu_frequency_flag")
 
 filegroup(
     name = "PublicHdrs",
@@ -14,6 +16,7 @@ filegroup(
                 "src/SpiPinNumbers.h",
                 "src/Usart.c",
                 "src/UsartIntern.h",
+                "src/LufaUsartImpl.c"
     ],
 )
 
@@ -31,6 +34,7 @@ cc_library(
     deps = [
         "@EmbeddedUtilities//:BitManipulation",
         "@EmbeddedUtilities//:Mutex",
+        "@LUFA//:VirtualSerial"
     ],
 )
 
@@ -41,7 +45,8 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@EmbeddedUtilities//:MutexHdrsOnly"
+        "@EmbeddedUtilities//:MutexHdrsOnly",
+        "@LUFA//:VirtualSerial",
     ],
     linkstatic = True,
 )

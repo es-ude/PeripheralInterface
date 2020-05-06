@@ -41,13 +41,13 @@ http_archive(
     name = "LUFA",
     build_file = "@EmbeddedSystemsBuildScripts//:BUILD.LUFA",
     strip_prefix = "lufa-LUFA-170418",
-    urls = ["http://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
+    urls = ["https://fourwalledcubicle.com/files/LUFA/LUFA-170418.zip"],
 )
 
 
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    strip_prefix = "EmbeddedUtil-0.3",
+    strip_prefix = "EmbeddedUtilities-0.3",
     urls = ["https://github.com/es-ude/EmbeddedUtil/archive/0.3.tar.gz"],
 )
