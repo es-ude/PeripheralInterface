@@ -12,6 +12,7 @@ http_archive(
     urls = ["https://github.com/es-ude/EmbeddedSystemsBuildScripts/archive/0.5.tar.gz"]
 )
 
+
 load("@EmbeddedSystemsBuildScripts//AvrToolchain:avr.bzl", "avr_toolchain")
 
 avr_toolchain()
