@@ -3,7 +3,12 @@ load("@AvrToolchain//platforms/cpu_frequency:cpu_frequency.bzl", "cpu_frequency_
 
 filegroup(
     name = "PublicHdrs",
-    srcs = glob(["PeripheralInterface/**/*.h"]),
+    srcs = [
+        "PeripheralInterface/Exception.h",
+        "PeripheralInterface/PeripheralInterface.h",
+        "PeripheralInterface/PeripheralSPIImpl.h",
+        "PeripheralInterface/Usart.h",
+    ],
 )
 
 filegroup(
@@ -30,7 +35,6 @@ cc_library(
     linkstatic = True,
     visibility = ["//visibility:public"],
     deps = [
-        ":LufaUsart",
         "@EmbeddedUtilities//:BitManipulation",
         "@EmbeddedUtilities//:Mutex",
     ],
@@ -61,6 +65,7 @@ cc_library(
         "-isystem external/LUFA",
          "-Iexternal/LUFA/Demos/Device/ClassDriver/VirtualSerial/Config"
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "@LUFA//:VirtualSerial",
     ],
