@@ -14,9 +14,18 @@
 
 #include <stdint.h>
 
-
-void lufaUsart_writeByte(const uint8_t *data);
-uint8_t lufaUsart_readByteBlocking();
-void lufaUsart_periodicUsbTask(void);
+void setUpUsbSerial(void);
+void initLufa(void);
+uint8_t lufaOutputAvailable(void);
+void lufaWriteByte(uint8_t c);
+void lufaWriteStringLength(char *s, uint16_t length);
+void lufaWriteString(char *s);
+void lufaWaitUntilDone(void);
+uint16_t lufaNumInputAvailable(void);
+uint8_t lufaReadAvailable(void);
+uint8_t lufaGetChar();
+int16_t lufaReadByte(void);
+uint16_t lufaReadByteBlocking(void);
+void lufaTask(void);
 
 #endif //PERIPHERALINTERFACE_LUFAUSARTIMPL_H
