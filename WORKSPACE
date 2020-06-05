@@ -8,10 +8,9 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 http_archive(
     name = "EmbeddedSystemsBuildScripts",
     type = "tar.gz",
-    strip_prefix = "EmbeddedSystemsBuildScripts-0.5",
-    urls = ["https://github.com/es-ude/EmbeddedSystemsBuildScripts/archive/0.5.tar.gz"]
+    strip_prefix = "EmbeddedSystemsBuildScripts-0.6.1",
+    urls = ["https://github.com/es-ude/EmbeddedSystemsBuildScripts/archive/v0.6.1.tar.gz"]
 )
-
 
 load("@EmbeddedSystemsBuildScripts//AvrToolchain:avr.bzl", "avr_toolchain")
 
