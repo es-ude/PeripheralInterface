@@ -1,8 +1,8 @@
 #ifndef PERIPHERALINTERFACE_H
 #define PERIPHERALINTERFACE_H
 
-#include "Util/Callback.h"
-#include "Util/Mutex.h"
+#include "EmbeddedUtilities/Callback.h"
+#include "EmbeddedUtilities/Mutex.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>

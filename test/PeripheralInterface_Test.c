@@ -1,7 +1,7 @@
 #include "PeripheralInterface/PeripheralInterface.h"
 #include <unity.h>
-#include "Util/Atomic.h"
-#include "Util/MockMutex.h"
+#include "EmbeddedUtilities/Atomic.h"
+#include "EmbeddedUtilities/MockMutex.h"
 #include <CException.h>
 
 enum {

@@ -49,6 +49,6 @@ http_archive(
 http_archive(
     name = "EmbeddedUtilities",
     type = "tar.gz",
-    strip_prefix = "EmbeddedUtilities-0.3",
-    urls = ["https://github.com/es-ude/EmbeddedUtil/archive/0.3.tar.gz"],
+    strip_prefix = "EmbeddedUtilities-0.3.1",
+    urls = ["https://github.com/es-ude/EmbeddedUtilities/archive/v0.3.1.tar.gz"],
 )

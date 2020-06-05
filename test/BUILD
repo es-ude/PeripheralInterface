@@ -25,6 +25,6 @@
 #
 #mock(
 #    name = "MockMutex",
-#    srcs = ["@EmbeddedUtilities//:Util/Mutex.h"],
+#    srcs = ["@EmbeddedUtilities//:EmbeddedUtilities/Mutex.h"],
 #    deps = ["@EmbeddedUtilities//:MutexHdrsOnly"],
 #)

@@ -3,7 +3,7 @@
 #include "PeripheralInterface/PeripheralSPIImpl.h"
 #include "src/SpiPinNumbers.h"
 #include "PeripheralInterface/Exception.h"
-#include "Util/MockMutex.h"
+#include "EmbeddedUtilities/MockMutex.h"
 
 #include <stdlib.h>
 #include <string.h>

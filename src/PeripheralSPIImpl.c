@@ -1,5 +1,5 @@
 #include "src/PeripheralSPIImplIntern.h"
-#include "Util/BitManipulation.h"
+#include "EmbeddedUtilities/BitManipulation.h"
 
 
 size_t
